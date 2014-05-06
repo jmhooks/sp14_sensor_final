@@ -1,3 +1,11 @@
+<html>
+<head>
+<title>WSN Final Project Data</title>
+<head>
+<body>
+</body>
+</html>
+
 <?php
 $db = newmysqli("localhost",,"sensor_stuff");
 if($db->connect_error){
