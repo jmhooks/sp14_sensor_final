@@ -8,6 +8,10 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.utils.URIUtils;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.rapplogic.xbee.api.ApiId;
 import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeResponse;
@@ -27,7 +31,7 @@ public class Gateway {
 
 				try {
 					// we wait here until a packet is received.
-					XBeeResponse response = xbee.getResponse();
+					XBeeResponse response = xbee.getResponse(10);
 
 					if (response.getApiId() == ApiId.ZNET_RX_RESPONSE) {
 						// we received a packet from ZNetSenderTest.java
@@ -41,17 +45,33 @@ public class Gateway {
 						System.out.println(reading);
 						
 						String httpResponse = Request
-								.Get("http://sensornetworks.engr.uga.edu/sp14/examples/addMoteData.php?"+
+								.Get("http://localhost/addMoteData.php?"+
 									  "password=penguin&"+
 										"sensor_value="+reading + "&"+
 									  "radio_address="+URLEncoder.encode(rx.getRemoteAddress64().toString(), "UTF-8"))
 								.execute().returnContent().asString();
 						System.out.println(httpResponse);
+						
 					} else {
 
 					}
 				} catch (Exception e) {
 
+				}
+				
+				//pole server for status of each of the motes
+				String httpResponse = Request
+						.Get("http://localhost/getMoteData.php?")								
+						.execute().returnContent().asString();
+				//System.out.println(httpResponse);
+				//Thread.sleep(1000);
+				JsonParser parser = new JsonParser();
+				JsonElement f = parser.parse(httpResponse);
+				JsonObject j = f.getAsJsonObject();
+				System.out.println(j.get("success").getAsBoolean());
+				JsonArray motes = j.get("data").getAsJsonArray();
+				for(int i=0; i<motes.size(); i++){
+					String values =  motes.get(i).getAsJsonObject().get("sensor_value").getAsString();
 				}
 			}
 		} finally {
