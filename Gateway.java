@@ -31,6 +31,7 @@ public class Gateway {
 
 				try {
 					// we wait here until a packet is received.
+					//stuff happens
 					XBeeResponse response = xbee.getResponse(10);
 
 					if (response.getApiId() == ApiId.ZNET_RX_RESPONSE) {
