@@ -11,6 +11,7 @@ function run(){
 	if(!dbConnect()){
 		$result['reason'] = 'could not connect o database';
 		return $result;
+		
 	}
 	$id = $_POST["id"];
 	$radio_address = $_POST["radio_address"];
