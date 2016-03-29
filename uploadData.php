@@ -20,10 +20,10 @@ function run(){
 
 
 
-$query = "INSERT INTO sensor_data( id,radio_address,mote_id,sensor_value,latlong) " . "VALUES('$id','$radio_address','$mote_id','$sensor_value','$latlong');
+$query = "INSERT INTO sensor_data( id,radio_address,mote_id,sensor_value,latlong) " . "VALUES('$id','$radio_address','$mote_id','$sensor_value','$latlong')";
 
 if(!$results){
-	$result['reason']= "error inserting informtion into database';
+	$result['reason']= "error inserting informtion into database";
 	return $result;
 }
 
