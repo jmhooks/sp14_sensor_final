@@ -13,9 +13,9 @@ if($db->connect_error){
 }
 
 $res = $db->query($query_string);
-$query_string = "select * from sensor_data;';
+$query_string = "select * from sensor_data;";
 $toReturn = array();
-$toReturn["success'] = false;
+$toReturn["success"] = false;
 
 
 
@@ -23,7 +23,7 @@ $toReturn["data"] = array();
 while($row=$res->fetch_assoc()){
 	$toReturn["data"][] = intval($row['sensor_value']);
 }
-$toReturn["success'] = true;
+$toReturn["success"] = true;
 
 echor json_encode($toReturn);
 
